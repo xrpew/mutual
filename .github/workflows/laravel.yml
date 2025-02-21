@@ -12,20 +12,27 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    
+
     - name: Set up PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.1' # Puedes cambiarlo a 8.0 si es necesario
+        php-version: '8.1'
 
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
-    - name: Update Dependencies
-      run: composer update --no-progress --no-interaction
-
     - name: Install Dependencies
       run: composer install --prefer-dist --no-progress --no-interaction
+
+    - name: Run PHP_CodeSniffer (PHPCS)
+      run: |
+        composer require --dev squizlabs/php_codesniffer
+        vendor/bin/phpcs --standard=PSR12 src/
+
+    - name: Run PHPStan Analysis
+      run: |
+        composer require --dev phpstan/phpstan
+        vendor/bin/phpstan analyse src/ --level=5
 
     - name: Generate Application Key
       run: php artisan key:generate
