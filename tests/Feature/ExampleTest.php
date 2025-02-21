@@ -20,7 +20,7 @@ class ExampleTest extends TestCase
     {
         $response = $this->get('/notfound');
 
-        $response->assertStatus(100);
+        $response->assertStatus(404);
     }
 
 }
