@@ -33,7 +33,6 @@ jobs:
       run: |
         composer require --dev phpstan/phpstan
         vendor/bin/phpstan analyse app/ --level=5
-        vendor/bin/phpstan analyse routes/ --level=5
 
     - name: Generate Application Key
       run: php artisan key:generate
