@@ -27,12 +27,14 @@ jobs:
     - name: Run PHP_CodeSniffer (PHPCS)
       run: |
         composer require --dev squizlabs/php_codesniffer
-        vendor/bin/phpcs --standard=PSR12 src/
+        vendor/bin/phpcs --standard=PSR12 app/
+        vendor/bin/phpcs --standard=PSR12 routes/
 
     - name: Run PHPStan Analysis
       run: |
         composer require --dev phpstan/phpstan
-        vendor/bin/phpstan analyse src/ --level=5
+        vendor/bin/phpstan analyse app/ --level=5
+        vendor/bin/phpstan analyse routes/ --level=5
 
     - name: Generate Application Key
       run: php artisan key:generate
